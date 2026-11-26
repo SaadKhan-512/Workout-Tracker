@@ -37,16 +37,6 @@ class User_Defined_Workouts(Base):
     created_at = Column(Date, server_default=func.current_date())
     completed_at = Column(Date, nullable=True)
 
-class Workout_comments(Base):
-    __tablename__ = "workout_comments"
-
-    id = Column(Integer, primary_key=True)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.uuid", ondelete="CASCADE"), nullable=False)
-
-    workout_id = Column(Integer, ForeignKey("user_defined_workouts.id", ondelete="CASCADE"), nullable=False)
-    comment = Column(Text, nullable=False)
-
-    comment_at = Column(Date, server_default=func.current_date())
 
 class Workout_Exercises(Base):
     __tablename__ = "workout_exercises"
@@ -68,12 +58,6 @@ class Workout_Sessions(Base):
     id = Column(Integer, primary_key=True)
 
     workout_id = Column(Integer, ForeignKey("user_defined_workouts.id", ondelete="CASCADE"))
-
-    scheduled_at = Column(Date, nullable=True)
-    started_at = Column(Date, nullable=True)
-    completed_at = Column(Date, nullable=True)
-
-    status = Column(String, nullable=False, default="pending")
     notes = Column(String, nullable=True)
 
 
@@ -88,3 +72,13 @@ class Session_Exercises(Base):
     sets_completed = Column(Integer, nullable=False)
     reps_completed = Column(Integer, nullable=False)
     weight_used = Column(Numeric(8, 2), nullable=False)
+
+class Exercise_status(Base):
+    __tablename__ = "exercises_status"
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    
+    session_id = Column(Integer, ForeignKey("workout_sessions.id", ondelete="CASCADE"),nullable=False)
+    workout_exercise_id = Column(Integer, ForeignKey("workout_exercises.id", ondelete="RESTRICT"),nullable=False)
+
+    status = Column(String, nullable=True)
