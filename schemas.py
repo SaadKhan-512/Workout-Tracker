@@ -25,6 +25,19 @@ class Workout_Exercise_Schema(BaseModel):
     weight: int
 
 
+# Workout_Session Schema
+class Workout_Sessions_Schema(BaseModel):
+    workout_id: int
+    notes: Optional[str] = None
+
+# Workout_Exercise_Session Schema
+class Workout_Exercise_Session_Schema (BaseModel):
+    session_id: int
+    workout_exercise_id: int
+    sets_completed: int
+    reps_completed: int
+    weight_used: int
+
 # Schema for token data
 class Token_Data(BaseModel):
     id: Optional[UUID] = None
