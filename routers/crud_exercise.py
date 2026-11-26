@@ -5,7 +5,6 @@ from Authorization import token
 import schemas
 
 router = APIRouter(prefix="/exercise", tags=["CRUD-Exercise"])
-
 @router.get("")
 def get_exercises(workout_id: int, 
                   db: Session = Depends(database.get_db), 
